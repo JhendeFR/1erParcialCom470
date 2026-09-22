@@ -1,0 +1,26 @@
+Start-Process (Join-Path (Get-Location) "target\site\jacoco\index.html")
+ver cobertura
+
+.\mvnw.cmd clean test
+ejecutar todas las pruebas 
+
+.\mvnw.cmd clean "-Dtest=LibrosControllerTest" test    
+ver pruebas de un archivo, libros controller
+
+.\mvnw.cmd clean "-Dtest=LibrosServiceImplTest" test
+LibrosServiseImpl
+
+
+
+
+
+
+Element: paquete o clase analizada.
+Missed Instructions: instrucciones de código que no fueron ejecutadas.
+Cov.: porcentaje de instrucciones ejecutadas.
+Missed Branches: decisiones no probadas, por ejemplo if/else.
+Cov.: porcentaje de ramas probadas.
+Missed / Cxty: complejidad ciclomática no cubierta y total.
+Missed / Lines: líneas no ejecutadas y total.
+Missed / Methods: métodos no ejecutados y total.
+Missed / Classes: clases no ejecutadas y total.
