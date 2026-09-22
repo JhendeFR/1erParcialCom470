@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="es"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>LibrosServiceImpl.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">ms-books-catalogue</a> &gt; <a href="index.source.html" class="el_package">com.ms_books_catalogue.service</a> &gt; <span class="el_source">LibrosServiceImpl.java</span></div><h1>LibrosServiceImpl.java</h1><pre class="source lang-java linenums">package com.ms_books_catalogue.service;
+
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.github.fge.jsonpatch.JsonPatchException;
+import com.github.fge.jsonpatch.mergepatch.JsonMergePatch;
+import com.ms_books_catalogue.controller.model.LibroDto;
+import com.ms_books_catalogue.data.LibroRepository;
+import com.ms_books_catalogue.data.model.Libro;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
+
+import java.util.List;
+
+@Service
+<span class="fc" id="L19">@Slf4j</span>
+@RequiredArgsConstructor
+public class LibrosServiceImpl implements LibrosService {
+
+    private final LibroRepository repository;
+    private final ObjectMapper objectMapper;
+
+    @Override
+    public List&lt;Libro&gt; getLibros(String titulo, String autor, String editorial, Integer anio, String resumen, String genero, Boolean visible) {
+<span class="fc bfc" id="L28" title="All 14 branches covered.">        if (StringUtils.hasLength(titulo) || StringUtils.hasLength(autor) || StringUtils.hasLength(editorial) || anio != null || StringUtils.hasLength(resumen) || StringUtils.hasLength(genero) || visible != null) {</span>
+<span class="fc" id="L29">            return repository.search(titulo, autor, editorial, anio, resumen, genero, visible);</span>
+        }
+<span class="fc" id="L31">        List&lt;Libro&gt; libros = repository.getLibros();</span>
+<span class="fc bfc" id="L32" title="All 2 branches covered.">        return libros.isEmpty() ? null : libros;</span>
+    }
+
+    @Override
+    public Libro getLibro(String id) {
+<span class="fc" id="L37">        return repository.getById(Long.valueOf(id));</span>
+    }
+
+    @Override
+    public Boolean eliminarLibro(String id) {
+<span class="fc" id="L42">        Libro libro = repository.getById(Long.valueOf(id));</span>
+<span class="fc bfc" id="L43" title="All 2 branches covered.">        if (libro != null) {</span>
+<span class="fc" id="L44">            repository.delete(libro);</span>
+<span class="fc" id="L45">            return Boolean.TRUE;</span>
+        } else {
+<span class="fc" id="L47">            return Boolean.FALSE;</span>
+        }
+    }
+
+    @Override
+    public Libro crearLibro(LibroDto libroCrear) {
+<span class="fc bfc" id="L53" title="All 4 branches covered.">        if (libroCrear != null &amp;&amp; StringUtils.hasText(libroCrear.getTitulo())</span>
+<span class="fc bfc" id="L54" title="All 2 branches covered.">            &amp;&amp; StringUtils.hasText(libroCrear.getAutor())</span>
+<span class="fc bfc" id="L55" title="All 2 branches covered.">            &amp;&amp; StringUtils.hasText(libroCrear.getEditorial())</span>
+<span class="fc bfc" id="L56" title="All 2 branches covered.">            &amp;&amp; StringUtils.hasText(libroCrear.getGenero())</span>
+<span class="fc bfc" id="L57" title="All 2 branches covered.">                &amp;&amp; libroCrear.getPrecio() != null</span>
+<span class="fc bfc" id="L58" title="All 2 branches covered.">                &amp;&amp; libroCrear.getStock() != null</span>
+<span class="fc bfc" id="L59" title="All 2 branches covered.">                &amp;&amp; libroCrear.getVisible() != null) {</span>
+<span class="fc" id="L60">            Libro libro = Libro.builder()</span>
+<span class="fc" id="L61">                    .titulo(libroCrear.getTitulo())</span>
+<span class="fc" id="L62">                    .autor(libroCrear.getAutor())</span>
+<span class="fc" id="L63">                    .editorial(libroCrear.getEditorial())</span>
+<span class="fc" id="L64">                    .anio(libroCrear.getAnio())</span>
+<span class="fc" id="L65">                    .isbn(libroCrear.getIsbn())</span>
+<span class="fc" id="L66">                    .resumen(libroCrear.getResumen())</span>
+<span class="fc" id="L67">                    .genero(libroCrear.getGenero())</span>
+<span class="fc" id="L68">                    .precio(libroCrear.getPrecio())</span>
+<span class="fc" id="L69">                    .imagen(libroCrear.getImagen())</span>
+<span class="fc" id="L70">                    .stock(libroCrear.getStock())</span>
+<span class="fc" id="L71">                    .visible(libroCrear.getVisible())</span>
+<span class="fc" id="L72">                    .build();</span>
+<span class="fc" id="L73">            return repository.save(libro);</span>
+        } else {
+<span class="fc" id="L75">            return null;</span>
+        }
+    }
+
+    @Override
+    public Libro actualizarLibro(String id, String libroModificar) {
+<span class="fc" id="L81">        Libro libro = repository.getById(Long.valueOf(id));</span>
+<span class="fc bfc" id="L82" title="All 2 branches covered.">        if (libro != null) {</span>
+            try {
+<span class="fc" id="L84">                JsonMergePatch jsonMergePatch = JsonMergePatch.fromJson(objectMapper.readTree(libroModificar));</span>
+<span class="fc" id="L85">                JsonNode target = jsonMergePatch.apply(objectMapper.readTree(objectMapper.writeValueAsString(libro)));</span>
+<span class="fc" id="L86">                Libro libroActualizado = objectMapper.treeToValue(target, Libro.class);</span>
+<span class="fc" id="L87">                repository.save(libroActualizado);</span>
+<span class="fc" id="L88">                return libroActualizado;</span>
+<span class="fc" id="L89">            } catch (JsonProcessingException | JsonPatchException e) {</span>
+<span class="fc" id="L90">                log.error(&quot;Error al actualizar el libro {}&quot;, id, e);</span>
+            }
+        }
+<span class="fc" id="L93">        return null;</span>
+    }
+
+    @Override
+    public Libro actualizarLibro(String id, LibroDto libroModificar) {
+<span class="fc" id="L98">        Libro libro = repository.getById(Long.valueOf(id));</span>
+<span class="fc bfc" id="L99" title="All 2 branches covered.">        if (libro != null) {</span>
+<span class="fc" id="L100">            libro.update(libroModificar);</span>
+<span class="fc" id="L101">            repository.save(libro);</span>
+<span class="fc" id="L102">            return libro;</span>
+        } else {
+<span class="fc" id="L104">            return null;</span>
+        }
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.12.202403310830</span></div></body></html>

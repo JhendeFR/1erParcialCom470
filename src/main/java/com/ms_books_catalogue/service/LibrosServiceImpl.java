@@ -50,10 +50,10 @@ public class LibrosServiceImpl implements LibrosService {
 
     @Override
     public Libro crearLibro(LibroDto libroCrear) {
-        if (libroCrear != null && StringUtils.hasLength(libroCrear.getTitulo().trim())
-                && StringUtils.hasLength(libroCrear.getAutor().trim())
-                && StringUtils.hasLength(libroCrear.getEditorial().trim())
-                && StringUtils.hasLength(libroCrear.getGenero().trim())
+        if (libroCrear != null && StringUtils.hasText(libroCrear.getTitulo())
+            && StringUtils.hasText(libroCrear.getAutor())
+            && StringUtils.hasText(libroCrear.getEditorial())
+            && StringUtils.hasText(libroCrear.getGenero())
                 && libroCrear.getPrecio() != null
                 && libroCrear.getStock() != null
                 && libroCrear.getVisible() != null) {
