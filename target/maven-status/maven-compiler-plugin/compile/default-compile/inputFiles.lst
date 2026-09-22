@@ -1,0 +1,15 @@
+C:\Users\antra\Desktop\1erParcialCom470\src\main\java\com\ms_books_catalogue\config\BeanConfig.java
+C:\Users\antra\Desktop\1erParcialCom470\src\main\java\com\ms_books_catalogue\controller\LibrosController.java
+C:\Users\antra\Desktop\1erParcialCom470\src\main\java\com\ms_books_catalogue\controller\model\LibroCrear.java
+C:\Users\antra\Desktop\1erParcialCom470\src\main\java\com\ms_books_catalogue\controller\model\LibroDto.java
+C:\Users\antra\Desktop\1erParcialCom470\src\main\java\com\ms_books_catalogue\data\LibroJpaRepository.java
+C:\Users\antra\Desktop\1erParcialCom470\src\main\java\com\ms_books_catalogue\data\LibroRepository.java
+C:\Users\antra\Desktop\1erParcialCom470\src\main\java\com\ms_books_catalogue\data\model\Libro.java
+C:\Users\antra\Desktop\1erParcialCom470\src\main\java\com\ms_books_catalogue\data\seeder\DatabaseSeederFake.java
+C:\Users\antra\Desktop\1erParcialCom470\src\main\java\com\ms_books_catalogue\data\utils\Constantes.java
+C:\Users\antra\Desktop\1erParcialCom470\src\main\java\com\ms_books_catalogue\data\utils\SearchCriteria.java
+C:\Users\antra\Desktop\1erParcialCom470\src\main\java\com\ms_books_catalogue\data\utils\SearchOperation.java
+C:\Users\antra\Desktop\1erParcialCom470\src\main\java\com\ms_books_catalogue\data\utils\SearchStatement.java
+C:\Users\antra\Desktop\1erParcialCom470\src\main\java\com\ms_books_catalogue\MsBooksCatalogueApplication.java
+C:\Users\antra\Desktop\1erParcialCom470\src\main\java\com\ms_books_catalogue\service\LibrosService.java
+C:\Users\antra\Desktop\1erParcialCom470\src\main\java\com\ms_books_catalogue\service\LibrosServiceImpl.java
