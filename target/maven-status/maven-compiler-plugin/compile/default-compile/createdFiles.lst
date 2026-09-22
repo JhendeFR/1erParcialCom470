@@ -1,0 +1,16 @@
+com\ms_books_catalogue\data\model\Libro.class
+com\ms_books_catalogue\service\LibrosServiceImpl.class
+com\ms_books_catalogue\controller\LibrosController.class
+com\ms_books_catalogue\data\utils\Constantes.class
+com\ms_books_catalogue\data\LibroJpaRepository.class
+com\ms_books_catalogue\service\LibrosService.class
+com\ms_books_catalogue\data\seeder\DatabaseSeederFake.class
+com\ms_books_catalogue\controller\model\LibroCrear.class
+com\ms_books_catalogue\data\model\Libro$LibroBuilder.class
+com\ms_books_catalogue\data\utils\SearchStatement.class
+com\ms_books_catalogue\MsBooksCatalogueApplication.class
+com\ms_books_catalogue\controller\model\LibroDto.class
+com\ms_books_catalogue\data\utils\SearchOperation.class
+com\ms_books_catalogue\data\LibroRepository.class
+com\ms_books_catalogue\config\BeanConfig.class
+com\ms_books_catalogue\data\utils\SearchCriteria.class
