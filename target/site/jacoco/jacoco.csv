@@ -1,0 +1,11 @@
+GROUP,PACKAGE,CLASS,INSTRUCTION_MISSED,INSTRUCTION_COVERED,BRANCH_MISSED,BRANCH_COVERED,LINE_MISSED,LINE_COVERED,COMPLEXITY_MISSED,COMPLEXITY_COVERED,METHOD_MISSED,METHOD_COVERED
+ms-books-catalogue,com.ms_books_catalogue.controller,LibrosController,101,0,12,0,27,0,13,0,7,0
+ms-books-catalogue,com.ms_books_catalogue.data.utils,SearchCriteria,187,0,18,0,34,0,12,0,3,0
+ms-books-catalogue,com.ms_books_catalogue.data.utils,Constantes,3,0,0,0,1,0,1,0,1,0
+ms-books-catalogue,com.ms_books_catalogue.data.utils,SearchOperation,51,0,0,0,9,0,1,0,1,0
+ms-books-catalogue,com.ms_books_catalogue.data,LibroRepository,107,0,14,0,20,0,12,0,5,0
+ms-books-catalogue,com.ms_books_catalogue.data.seeder,DatabaseSeederFake,240,0,0,0,99,0,4,0,4,0
+ms-books-catalogue,com.ms_books_catalogue.config,BeanConfig,7,0,0,0,2,0,2,0,2,0
+ms-books-catalogue,com.ms_books_catalogue.data.model,Libro,0,49,0,0,0,13,0,1,0,1
+ms-books-catalogue,com.ms_books_catalogue,MsBooksCatalogueApplication,8,0,0,0,3,0,2,0,2,0
+ms-books-catalogue,com.ms_books_catalogue.service,LibrosServiceImpl,0,203,0,38,0,49,0,26,0,7

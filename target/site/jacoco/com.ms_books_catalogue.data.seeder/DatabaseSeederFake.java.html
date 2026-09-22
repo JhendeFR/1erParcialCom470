@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="es"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>DatabaseSeederFake.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">ms-books-catalogue</a> &gt; <a href="index.source.html" class="el_package">com.ms_books_catalogue.data.seeder</a> &gt; <span class="el_source">DatabaseSeederFake.java</span></div><h1>DatabaseSeederFake.java</h1><pre class="source lang-java linenums">package com.ms_books_catalogue.data.seeder;
+
+import com.ms_books_catalogue.data.LibroJpaRepository;
+import com.ms_books_catalogue.data.model.Libro;
+import lombok.RequiredArgsConstructor;
+import org.springframework.boot.CommandLineRunner;
+import org.springframework.stereotype.Component;
+
+@Component
+@RequiredArgsConstructor
+public class DatabaseSeederFake implements CommandLineRunner {
+
+    private final LibroJpaRepository libroRepository;
+    private void saveIfNotExist(Libro libro) {
+<span class="nc" id="L15">        libroRepository.findByIsbn(libro.getIsbn()).ifPresentOrElse(</span>
+                existingLibro -&gt; {
+<span class="nc" id="L17">                    System.out.println(&quot;El libro con ISBN &quot; + libro.getIsbn() + &quot; ya existe.&quot;);</span>
+<span class="nc" id="L18">                },</span>
+                () -&gt; {
+<span class="nc" id="L20">                    libroRepository.save(libro);</span>
+<span class="nc" id="L21">                    System.out.println(&quot;Libro con ISBN &quot; + libro.getIsbn() + &quot; guardado.&quot;);</span>
+<span class="nc" id="L22">                }</span>
+        );
+<span class="nc" id="L24">    }</span>
+    @Override
+    public void run(String... args) throws Exception {
+       //insertamos libros de pruebas
+<span class="nc" id="L28">        saveIfNotExist(Libro.builder()</span>
+<span class="nc" id="L29">                .titulo(&quot;To Kill a Mockingbird&quot;)</span>
+<span class="nc" id="L30">                .autor(&quot;Harper Lee&quot;)</span>
+<span class="nc" id="L31">                .editorial(&quot;Planeta&quot;)</span>
+<span class="nc" id="L32">                .stock(10)</span>
+<span class="nc" id="L33">                .visible(true)</span>
+<span class="nc" id="L34">                .anio(1995)</span>
+<span class="nc" id="L35">                .isbn(&quot;978-0-06-112008-4&quot;)</span>
+<span class="nc" id="L36">                .resumen(&quot;A novel set in the Great Depression...&quot;)</span>
+<span class="nc" id="L37">                .genero(&quot;Fantasía&quot;)</span>
+<span class="nc" id="L38">                .precio(19.90f)</span>
+<span class="nc" id="L39">                .imagen(&quot;https://covers.openlibrary.org/b/id/8225261-L.jpg&quot;)</span>
+<span class="nc" id="L40">                .build());</span>
+
+<span class="nc" id="L42">        saveIfNotExist(Libro.builder()</span>
+<span class="nc" id="L43">                .titulo(&quot;1984&quot;)</span>
+<span class="nc" id="L44">                .autor(&quot;George Orwell&quot;)</span>
+<span class="nc" id="L45">                .editorial(&quot;Roca Editorial&quot;)</span>
+<span class="nc" id="L46">                .stock(0)</span>
+<span class="nc" id="L47">                .visible(true)</span>
+<span class="nc" id="L48">                .anio(1984)</span>
+<span class="nc" id="L49">                .isbn(&quot;978-0-452-28423-4&quot;)</span>
+<span class="nc" id="L50">                .resumen(&quot;A dystopian novel exploring themes...&quot;)</span>
+<span class="nc" id="L51">                .genero(&quot;Juvenil&quot;)</span>
+<span class="nc" id="L52">                .precio(16.50f)</span>
+<span class="nc" id="L53">                .imagen(&quot;https://covers.openlibrary.org/b/id/7222246-L.jpg&quot;)</span>
+<span class="nc" id="L54">                .build());</span>
+
+<span class="nc" id="L56">        saveIfNotExist(Libro.builder()</span>
+<span class="nc" id="L57">                .titulo(&quot;Pride and Prejudice&quot;)</span>
+<span class="nc" id="L58">                .autor(&quot;Jane Austen&quot;)</span>
+<span class="nc" id="L59">                .editorial(&quot;Siglo XXI Editores&quot;)</span>
+<span class="nc" id="L60">                .stock(20)</span>
+<span class="nc" id="L61">                .visible(false)</span>
+<span class="nc" id="L62">                .anio(2022)</span>
+<span class="nc" id="L63">                .isbn(&quot;978-0-19-953556-9&quot;)</span>
+<span class="nc" id="L64">                .resumen(&quot;A romantic novel that delves into issues of class...&quot;)</span>
+<span class="nc" id="L65">                .genero(&quot;Aventura&quot;)</span>
+<span class="nc" id="L66">                .precio(15.00f)</span>
+<span class="nc" id="L67">                .imagen(&quot;https://covers.openlibrary.org/b/id/8231856-L.jpg&quot;)</span>
+<span class="nc" id="L68">                .build());</span>
+
+<span class="nc" id="L70">        saveIfNotExist(Libro.builder()</span>
+<span class="nc" id="L71">                .titulo(&quot;The Great Gatsby&quot;)</span>
+<span class="nc" id="L72">                .autor(&quot;F. Scott Fitzgerald&quot;)</span>
+<span class="nc" id="L73">                .editorial(&quot;Santillana&quot;)</span>
+<span class="nc" id="L74">                .stock(7)</span>
+<span class="nc" id="L75">                .visible(true)</span>
+<span class="nc" id="L76">                .anio(1999)</span>
+<span class="nc" id="L77">                .isbn(&quot;978-0-7432-7356-5&quot;)</span>
+<span class="nc" id="L78">                .resumen(&quot;A story about the mysterious Jay Gatsby...&quot;)</span>
+<span class="nc" id="L79">                .genero(&quot;Ciencia&quot;)</span>
+<span class="nc" id="L80">                .precio(10.20f)</span>
+<span class="nc" id="L81">                .imagen(&quot;https://covers.openlibrary.org/b/id/7222161-L.jpg&quot;)</span>
+<span class="nc" id="L82">                .build());</span>
+
+<span class="nc" id="L84">        saveIfNotExist(Libro.builder()</span>
+<span class="nc" id="L85">                .titulo(&quot;Moby Dick&quot;)</span>
+<span class="nc" id="L86">                .autor(&quot;Herman Melville&quot;)</span>
+<span class="nc" id="L87">                .editorial(&quot;Anagrama&quot;)</span>
+<span class="nc" id="L88">                .stock(20)</span>
+<span class="nc" id="L89">                .visible(true)</span>
+<span class="nc" id="L90">                .anio(2004)</span>
+<span class="nc" id="L91">                .isbn(&quot;978-0-14-243724-7&quot;)</span>
+<span class="nc" id="L92">                .resumen(&quot;A thrilling adventure of Captain Ahab...&quot;)</span>
+<span class="nc" id="L93">                .genero(&quot;Ciencia Ficción&quot;)</span>
+<span class="nc" id="L94">                .precio(25.50f)</span>
+<span class="nc" id="L95">                .imagen(&quot;https://covers.openlibrary.org/b/id/7222247-L.jpg&quot;)</span>
+<span class="nc" id="L96">                .build());</span>
+
+<span class="nc" id="L98">        saveIfNotExist(Libro.builder()</span>
+<span class="nc" id="L99">                .titulo(&quot;The Catcher in the Rye&quot;)</span>
+<span class="nc" id="L100">                .autor(&quot;J.D. Salinger&quot;)</span>
+<span class="nc" id="L101">                .editorial(&quot;Alfaguara&quot;)</span>
+<span class="nc" id="L102">                .stock(6)</span>
+<span class="nc" id="L103">                .visible(true)</span>
+<span class="nc" id="L104">                .anio(2024)</span>
+<span class="nc" id="L105">                .isbn(&quot;978-0-316-76948-0&quot;)</span>
+<span class="nc" id="L106">                .resumen(&quot;The experiences of Holden Caulfield...&quot;)</span>
+<span class="nc" id="L107">                .genero(&quot;Biografías&quot;)</span>
+<span class="nc" id="L108">                .precio(16.50f)</span>
+<span class="nc" id="L109">                .imagen(&quot;https://covers.openlibrary.org/b/id/8226191-L.jpg&quot;)</span>
+<span class="nc" id="L110">                .build());</span>
+
+<span class="nc" id="L112">        saveIfNotExist(Libro.builder()</span>
+<span class="nc" id="L113">                .titulo(&quot;The Hobbit&quot;)</span>
+<span class="nc" id="L114">                .autor(&quot;J.R.R. Tolkien&quot;)</span>
+<span class="nc" id="L115">                .editorial(&quot;HarperCollins&quot;)</span>
+<span class="nc" id="L116">                .stock(7)</span>
+<span class="nc" id="L117">                .visible(false)</span>
+<span class="nc" id="L118">                .anio(2016)</span>
+<span class="nc" id="L119">                .isbn(&quot;978-0-618-26030-0&quot;)</span>
+<span class="nc" id="L120">                .resumen(&quot;The journey of Bilbo Baggins...&quot;)</span>
+<span class="nc" id="L121">                .genero(&quot;Terror&quot;)</span>
+<span class="nc" id="L122">                .precio(8.00f)</span>
+<span class="nc" id="L123">                .imagen(&quot;https://covers.openlibrary.org/b/id/6979861-L.jpg&quot;)</span>
+<span class="nc" id="L124">                .build());</span>
+<span class="nc" id="L125">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.12.202403310830</span></div></body></html>

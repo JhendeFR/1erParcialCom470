@@ -1,0 +1,260 @@
+{
+  "info": {
+    "name": "MS Books - E2E con Assertions",
+    "description": "Coleccion de pruebas funcionales E2E para el microservicio ms-books-catalogue.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "http://localhost:8080"
+    },
+    {
+      "key": "createdBookId",
+      "value": ""
+    }
+  ],
+  "item": [
+    {
+      "name": "01 - Obtener libros",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/libros",
+          "host": ["{{baseUrl}}"],
+          "path": ["libros"]
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('Responde HTTP 200', function () { pm.response.to.have.status(200); });",
+              "const body = pm.response.json();",
+              "pm.test('La respuesta es una lista', function () { pm.expect(body).to.be.an('array'); });",
+              "pm.test('La lista contiene libros', function () { pm.expect(body.length).to.be.above(0); });",
+              "pm.test('La respuesta tiene formato JSON', function () { pm.expect(pm.response.headers.get('Content-Type')).to.include('application/json'); });"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "02 - Buscar por autor",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/libros?autor=George",
+          "host": ["{{baseUrl}}"],
+          "path": ["libros"],
+          "query": [{ "key": "autor", "value": "George" }]
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('Responde HTTP 200', function () { pm.response.to.have.status(200); });",
+              "const body = pm.response.json();",
+              "pm.test('Devuelve una lista', function () { pm.expect(body).to.be.an('array'); });",
+              "pm.test('Los resultados corresponden al autor buscado', function () { body.forEach(function (book) { pm.expect(book.autor.toLowerCase()).to.include('george'); }); });"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "03 - Obtener libro existente",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/libros/1",
+          "host": ["{{baseUrl}}"],
+          "path": ["libros", "1"]
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('Responde HTTP 200', function () { pm.response.to.have.status(200); });",
+              "const body = pm.response.json();",
+              "pm.test('El libro tiene ID y titulo', function () { pm.expect(body.id).to.exist; pm.expect(body.titulo).to.be.a('string').and.not.empty; });",
+              "pm.test('El ID del libro es numerico', function () { pm.expect(body.id).to.be.a('number'); });"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "04 - Crear libro",
+      "request": {
+        "method": "POST",
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"titulo\": \"Libro E2E Postman\",\n  \"autor\": \"Autor E2E\",\n  \"editorial\": \"Editorial E2E\",\n  \"anio\": 2026,\n  \"isbn\": \"978-E2E-0001\",\n  \"resumen\": \"Libro creado durante la prueba E2E.\",\n  \"genero\": \"Pruebas\",\n  \"precio\": 25.5,\n  \"imagen\": \"https://example.com/e2e.jpg\",\n  \"stock\": 5,\n  \"visible\": true,\n  \"valoracion\": 5\n}"
+        },
+        "url": {
+          "raw": "{{baseUrl}}/libros",
+          "host": ["{{baseUrl}}"],
+          "path": ["libros"]
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('Responde HTTP 201', function () { pm.response.to.have.status(201); });",
+              "const body = pm.response.json();",
+              "pm.test('Devuelve el libro creado con ID', function () { pm.expect(body.id).to.exist; pm.expect(body.titulo).to.eql('Libro E2E Postman'); });",
+              "pm.test('El ID creado queda guardado para el flujo', function () { pm.collectionVariables.set('createdBookId', body.id); pm.expect(pm.collectionVariables.get('createdBookId')).to.eql(String(body.id)); });"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "05 - Actualizar libro con PUT",
+      "request": {
+        "method": "PUT",
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"titulo\": \"Libro E2E actualizado\",\n  \"autor\": \"Autor E2E\",\n  \"editorial\": \"Editorial E2E\",\n  \"anio\": 2026,\n  \"isbn\": \"978-E2E-0001\",\n  \"resumen\": \"Libro actualizado con PUT.\",\n  \"genero\": \"Pruebas\",\n  \"precio\": 30.0,\n  \"imagen\": \"https://example.com/e2e-updated.jpg\",\n  \"stock\": 8,\n  \"visible\": true,\n  \"valoracion\": 5\n}"
+        },
+        "url": {
+          "raw": "{{baseUrl}}/libros/{{createdBookId}}",
+          "host": ["{{baseUrl}}"],
+          "path": ["libros", "{{createdBookId}}"]
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('Responde HTTP 200', function () { pm.response.to.have.status(200); });",
+              "const body = pm.response.json();",
+              "pm.test('El titulo fue actualizado', function () { pm.expect(body.titulo).to.eql('Libro E2E actualizado'); });",
+              "pm.test('El precio fue actualizado', function () { pm.expect(body.precio).to.eql(30); });",
+              "pm.test('El ID actualizado coincide con el creado', function () { pm.expect(String(body.id)).to.eql(String(pm.collectionVariables.get('createdBookId'))); });"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "06 - Actualizar libro con PATCH",
+      "request": {
+        "method": "PATCH",
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "body": { "mode": "raw", "raw": "{\n  \"stock\": 12\n}" },
+        "url": {
+          "raw": "{{baseUrl}}/libros/{{createdBookId}}",
+          "host": ["{{baseUrl}}"],
+          "path": ["libros", "{{createdBookId}}"]
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('Responde HTTP 200', function () { pm.response.to.have.status(200); });",
+              "const body = pm.response.json();",
+              "pm.test('El stock fue actualizado parcialmente', function () { pm.expect(body.stock).to.eql(12); });",
+              "pm.test('PATCH devuelve un objeto de libro', function () { pm.expect(body).to.be.an('object'); });",
+              "pm.test('PATCH conserva el ID creado', function () { pm.expect(String(body.id)).to.eql(String(pm.collectionVariables.get('createdBookId'))); });"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "07 - Libro inexistente",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/libros/999999",
+          "host": ["{{baseUrl}}"],
+          "path": ["libros", "999999"]
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('Responde HTTP 404', function () { pm.response.to.have.status(404); });",
+              "pm.test('La respuesta no contiene un libro', function () { pm.expect(pm.response.text()).to.eql(''); });"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "08 - Eliminar libro creado",
+      "request": {
+        "method": "DELETE",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/libros/{{createdBookId}}",
+          "host": ["{{baseUrl}}"],
+          "path": ["libros", "{{createdBookId}}"]
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('Responde HTTP 200', function () { pm.response.to.have.status(200); });",
+              "pm.test('La respuesta es vacia', function () { pm.expect(pm.response.text()).to.eql(''); });",
+              "pm.test('El ID eliminado corresponde al creado', function () { pm.expect(pm.request.url.toString()).to.include(String(pm.collectionVariables.get('createdBookId'))); });"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "09 - Confirmar eliminacion",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/libros/{{createdBookId}}",
+          "host": ["{{baseUrl}}"],
+          "path": ["libros", "{{createdBookId}}"]
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test('El libro eliminado ya no existe', function () { pm.response.to.have.status(404); });"
+            ]
+          }
+        }
+      ]
+    }
+  ]
+}
