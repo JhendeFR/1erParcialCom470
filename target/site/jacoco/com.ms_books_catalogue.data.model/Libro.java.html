@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="es"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Libro.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">ms-books-catalogue</a> &gt; <a href="index.source.html" class="el_package">com.ms_books_catalogue.data.model</a> &gt; <span class="el_source">Libro.java</span></div><h1>Libro.java</h1><pre class="source lang-java linenums">package com.ms_books_catalogue.data.model;
+
+import com.ms_books_catalogue.controller.model.LibroDto;
+import com.ms_books_catalogue.data.utils.Constantes;
+import jakarta.persistence.*;
+import lombok.*;
+
+@Entity
+@Table(name = &quot;libros&quot;)
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
+@Builder
+@ToString
+public class Libro {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    @Column(name = Constantes.TITULO, nullable = false)
+    private String titulo;
+
+    @Column(name = Constantes.AUTOR, nullable = false)
+    private String autor;
+
+    @Column(name = Constantes.EDITORIAL, nullable = false)
+    private String editorial;
+
+    @Column(name = Constantes.ANIO)
+    private Integer anio;
+
+    @Column(name = Constantes.ISBN)
+    private String isbn;
+
+    @Column(name = Constantes.RESUMEN)
+    private String resumen;
+
+    @Column(name = Constantes.GENERO, nullable = false)
+    private String genero;
+
+    @Column(name = Constantes.PRECIO, nullable = false)
+    private Float precio;
+
+    @Column(name = Constantes.IMAGEN)
+    private String imagen;
+
+    @Column(name = Constantes.STOCK, nullable = false)
+    private Integer stock;
+
+    @Column(name = Constantes.VISIBLE, nullable = false)
+    private Boolean visible;
+
+    @Column(name = Constantes.VALORACION)
+    private Integer valoracion;
+
+    public void update(LibroDto libroDto){
+<span class="fc" id="L59">        this.titulo = libroDto.getTitulo();</span>
+<span class="fc" id="L60">        this.autor = libroDto.getAutor();</span>
+<span class="fc" id="L61">        this.editorial = libroDto.getEditorial();</span>
+<span class="fc" id="L62">        this.anio = libroDto.getAnio();</span>
+<span class="fc" id="L63">        this.isbn = libroDto.getIsbn();</span>
+<span class="fc" id="L64">        this.resumen = libroDto.getResumen();</span>
+<span class="fc" id="L65">        this.genero = libroDto.getGenero();</span>
+<span class="fc" id="L66">        this.precio = libroDto.getPrecio();</span>
+<span class="fc" id="L67">        this.imagen = libroDto.getImagen();</span>
+<span class="fc" id="L68">        this.stock = libroDto.getStock();</span>
+<span class="fc" id="L69">        this.visible = libroDto.getVisible();</span>
+<span class="fc" id="L70">        this.valoracion = libroDto.getValoracion();</span>
+<span class="fc" id="L71">    }</span>
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.12.202403310830</span></div></body></html>

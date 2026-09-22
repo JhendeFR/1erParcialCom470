@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="es"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>LibroRepository.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">ms-books-catalogue</a> &gt; <a href="index.source.html" class="el_package">com.ms_books_catalogue.data</a> &gt; <span class="el_source">LibroRepository.java</span></div><h1>LibroRepository.java</h1><pre class="source lang-java linenums">package com.ms_books_catalogue.data;
+
+import com.ms_books_catalogue.data.model.Libro;
+import com.ms_books_catalogue.data.utils.Constantes;
+import com.ms_books_catalogue.data.utils.SearchCriteria;
+import com.ms_books_catalogue.data.utils.SearchOperation;
+import com.ms_books_catalogue.data.utils.SearchStatement;
+import io.micrometer.common.util.StringUtils;
+import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Repository;
+
+import java.util.List;
+
+@Repository
+@RequiredArgsConstructor
+public class LibroRepository {
+
+    private final LibroJpaRepository repository;
+
+<span class="nc" id="L20">    public List&lt;Libro&gt; getLibros(){ return repository.findAll(); }</span>
+
+<span class="nc" id="L22">    public Libro getById(Long id){ return repository.findById(id).orElse(null); }</span>
+
+<span class="nc" id="L24">    public Libro save(Libro libro){ return repository.save(libro); }</span>
+
+<span class="nc" id="L26">    public void delete(Libro libro){ repository.delete(libro); }</span>
+
+    public List&lt;Libro&gt; search(String titulo, String autor, String editorial, Integer anio, String resumen, String genero, Boolean visible){
+<span class="nc" id="L29">        SearchCriteria&lt;Libro&gt; spec = new SearchCriteria&lt;&gt;();</span>
+
+<span class="nc bnc" id="L31" title="All 2 branches missed.">        if(StringUtils.isNotBlank(titulo)){</span>
+<span class="nc" id="L32">            spec.add(new SearchStatement(Constantes.TITULO, titulo, SearchOperation.MATCH));</span>
+        }
+
+<span class="nc bnc" id="L35" title="All 2 branches missed.">        if(StringUtils.isNotBlank(autor)){</span>
+<span class="nc" id="L36">            spec.add(new SearchStatement(Constantes.AUTOR, autor, SearchOperation.MATCH));</span>
+        }
+
+<span class="nc bnc" id="L39" title="All 2 branches missed.">        if(StringUtils.isNotBlank(editorial)){</span>
+<span class="nc" id="L40">            spec.add(new SearchStatement(Constantes.EDITORIAL, editorial, SearchOperation.MATCH));</span>
+        }
+
+<span class="nc bnc" id="L43" title="All 2 branches missed.">        if(anio != null){</span>
+<span class="nc" id="L44">            spec.add(new SearchStatement(Constantes.ANIO, anio, SearchOperation.EQUAL));</span>
+        }
+
+<span class="nc bnc" id="L47" title="All 2 branches missed.">        if(StringUtils.isNotBlank(resumen)){</span>
+<span class="nc" id="L48">            spec.add(new SearchStatement(Constantes.RESUMEN, resumen, SearchOperation.MATCH));</span>
+        }
+
+<span class="nc bnc" id="L51" title="All 2 branches missed.">        if(StringUtils.isNotBlank(genero)){</span>
+<span class="nc" id="L52">            spec.add(new SearchStatement(Constantes.GENERO, genero, SearchOperation.EQUAL));</span>
+        }
+
+<span class="nc bnc" id="L55" title="All 2 branches missed.">        if(visible != null){</span>
+<span class="nc" id="L56">            spec.add(new SearchStatement(Constantes.VISIBLE, visible, SearchOperation.EQUAL));</span>
+        }
+
+<span class="nc" id="L59">        return repository.findAll(spec);</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.12.202403310830</span></div></body></html>
